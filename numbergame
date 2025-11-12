@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #89f7fe, #66a6ff);
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      padding: 40px 30px;
+      width: 360px;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1.2s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    h1 {
+      color: #2b7a78;
+      font-size: 26px;
+      margin-bottom: 10px;
+      animation: pop 1s ease;
+    }
+    @keyframes pop {
+      0% {transform: scale(0.8); opacity: 0;}
+      100% {transform: scale(1); opacity: 1;}
+    }
+    p {
+      color: #555;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    input[type=number] {
+      padding: 12px;
+      border: 2px solid #2b7a78;
+      border-radius: 10px;
+      width: 80%;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    input[type=number]:focus {
+      outline: none;
+      border-color: #3b8f88;
+      box-shadow: 0 0 10px rgba(43,122,120,0.3);
+    }
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #2b7a78, #3b8f88);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(43,122,120,0.4);
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      min-height: 25px;
+      font-size: 16px;
+      color: #333;
+      animation: fade 0.5s ease;
+    }
+    @keyframes fade {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* floating animation background */
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in;
+    }
+    @keyframes float {
+      from {transform: translateY(0) scale(1); opacity: 1;}
+      to {transform: translateY(-100vh) scale(1.5); opacity: 0;}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Number Guessing Game</h1>
+    <p>Guess a number between <strong>1</strong> and <strong>100</strong></p>
+    <input type="number" id="guess" placeholder="Enter your guess" />
+    <br>
+    <button onclick="checkGuess()">Guess</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    // create animated bubbles
+    for(let i=0;i<15;i++){
+      let bubble=document.createElement('div');
+      bubble.classList.add('bubble');
+      bubble.style.left=Math.random()*100+'%';
+      bubble.style.width=bubble.style.height=10+Math.random()*40+'px';
+      bubble.style.animationDuration=6+Math.random()*4+'s';
+      document.body.appendChild(bubble);
+    }
+
+    let secret = Math.floor(Math.random() * 100) + 1;
+    function checkGuess() {
+      let guess = document.getElementById('guess').value;
+      let result = document.getElementById('result');
+      if (guess == secret) {
+        result.textContent = '🎉 Correct! You guessed the number!';
+        result.style.color = '#2b7a78';
+        document.body.style.background = 'linear-gradient(135deg, #43e97b, #38f9d7)';
+      } else if (guess < secret) {
+        result.textContent = '⬆️ Too low! Try a higher number.';
+        result.style.color = '#ff9800';
+      } else {
+        result.textContent = '⬇️ Too high! Try a lower number.';
+        result.style.color = '#e91e63';
+      }
+    }
+  </script>
+</body>
+</html>
+
